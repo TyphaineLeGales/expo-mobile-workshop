@@ -1,0 +1,121 @@
+{
+    "events": [
+        {
+            "id": 0, 
+            "name": "christmas", 
+            "date": "25/12", 
+            "recurring": "yearly", 
+            "people": [0, 1, 2, 3, 4, 5], 
+            "done": [0, 1]
+        }, 
+        {
+            "id": 1, 
+            "name": "Grandma's Birthday",
+            "date": "02/01", 
+            "recurring": "yearly", 
+            "people": [3]
+        }
+    ], 
+    "people": [
+        {
+            "id": 0, 
+            "name": "Le frère", 
+            "events": [0], 
+            "gift_ideas": [0, 1, 2]
+        }, 
+        {
+            "id": 1, 
+            "name": "David", 
+            "events": [0], 
+            "gift_ideas": []
+        }, 
+        {
+            "id": 2, 
+            "name": "Laura", 
+            "events": [0], 
+            "gift_ideas": [2, 3, 4]
+        }, 
+        {
+            "id": 3,
+            "name": "Ma", 
+            "events": [0, 1], 
+            "gift_ideas": [2, 5]
+        }, {
+            "id": 4,
+            "name": "GOAT", 
+            "events": [0], 
+            "gift_ideas": [7, 8, 9]
+        }, 
+        {
+            "id": 5, 
+            "name": "Papa", 
+            "events": [0], 
+            "gift_ideas": [0, 6, 7]
+        }
+    ], 
+    "gifts" : [
+        {
+            "id": 0, 
+            "title": "Fauteil de camping", 
+            "images": ["camping.png", "camping_2.png"], 
+            "links": [
+                "https://www.decathlon.fr/p/fauteuil-pliant-pour-le-camping/_/R-p-13372?mc=8852990&c=vert",
+                "https://www.leboncoin.fr/ad/ameublement/2882741351"
+            ]
+        },
+        {
+            "id": 1, 
+            "title": "Spa / Hamam / sauna",
+            "images": ["spa.png"], 
+            "links": ["https://paris.hammam-lescentciels.com/"]
+        }, 
+        {
+            "id": 2, 
+            "title": "L'art de la joie", 
+            "images": ["livre.png"], 
+            "links": ["https://www.amazon.fr/Lart-joie-Goliarda-Sapienza/dp/2878582152"]
+        }, 
+        {
+            "id": 3,
+            "title": "Jeu de strat", 
+            "images": ["strat.png", "strat_2.png"], 
+            "links": ["https://www.okkazeo.com/jeux/view/627/Mare-Nostrum", "https://www.cultura.com/p-smallworld-0824968726815.html"]
+        }, 
+        {
+            "id": 4, 
+            "title": "Montre connectée", 
+            "images": ["watch.png"],
+            "links": []
+        },
+        {
+            "id": 5, 
+            "title": "gourde", 
+            "images": ["gourde.png"], 
+            "links": ["https://24bottles.com/fr/collections/clima-bottle/products/clima-bottle-borealis-500-ml"]
+        }, 
+        {
+            "id": 6, 
+            "title": "pouf", 
+            "images": ["pouf.png"], 
+            "links": ["https://www.bigberthaoriginal.fr/products/le-pouf-doudou-cotele-ivoire?variant=47235421372747"]
+        }, 
+        {
+            "id": 7, 
+            "title": "Print", 
+            "images": ["print.png", "print_2.png"], 
+            "links": ["https://www.ugogattoni.fr/shop/p/nebula-003"]
+        },
+        {
+            "id": 8, 
+            "title": "lampe Toucan", 
+            "images": ["toucan.png"],
+            "links": []
+        }, 
+        {
+            "id": 9, 
+            "title": "assiettes à dessert", 
+            "images": ["plate.png"], 
+            "links": ["https://www.anothershop.ca/products/handmade-duck-dessert-plate?variant=40302396997768"]
+        }
+    ]
+}
