@@ -12,7 +12,8 @@ export default function TabLayout() {
       headerShadowVisible: false,
       headerTintColor: '#fff',
       tabBarStyle: {
-      backgroundColor: '#25292e',
+        backgroundColor: '#25292e',
+        padding: 6,
       },
       
     }}>
@@ -26,11 +27,29 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="about"
+        name="gifts"
         options={{
-          title: 'About',
+          title: 'Gifts',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+            <Ionicons name={focused ? 'gift' : 'gift-outline'} color={color} size={24}/>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="people"
+        options={{
+          title: 'People',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'people-sharp' : 'people-outline'} color={color} size={24}/>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="events"
+        options={{
+          title: 'Events',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'calendar-clear-sharp' : 'calendar-clear-outline'} color={color} size={24}/>
           ),
         }}
       />
