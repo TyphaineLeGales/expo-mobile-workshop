@@ -1,8 +1,10 @@
 import { Tabs } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { GlobalProvider } from '../provider/GlobalProvider';
 
 export default function TabLayout() {
   return (
+    <GlobalProvider>
     <Tabs 
       screenOptions={{
       tabBarActiveTintColor: '#17fc03',
@@ -35,15 +37,15 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="people"
-        options={{
-          title: 'People',
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'people-sharp' : 'people-outline'} color={color} size={24}/>
-          ),
-        }}
-      />
+       <Tabs.Screen
+          name="people" // This corresponds to app/(tabs)/people/index.tsx
+          options={{
+            title: "People",
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons name={focused ? "people-sharp" : "people-outline"} color={color} size={24} />
+            ),
+          }}
+        />
       <Tabs.Screen
         name="events"
         options={{
@@ -54,5 +56,6 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    </GlobalProvider>
   );
 }
