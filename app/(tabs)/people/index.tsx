@@ -1,12 +1,12 @@
 import { Text, View, StyleSheet, Button, FlatList,ActivityIndicator, Pressable } from 'react-native';
 import { useRouter } from "expo-router";
-import { usePeopleContext } from '@/app/provider/PeopleProvider'
+import { usePeopleContext } from '@/provider/PeopleProvider'
 import AddBtn from '@/components/AddBtn';
-import AddPeopleForm from '@/components/AddPeopleForm'
+import AddForm from '@/components/AddForm'
 import {useState} from 'react'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 export default function PeopleListScreen() {
-  const { friends, isLoading,removeFriend } = usePeopleContext();
+  const { friends, isLoading,removeFriend, addFriend } = usePeopleContext();
   const [isAddFormVisible, setIsAddFormVisible] = useState<boolean>(false);
   const router = useRouter()
 
@@ -35,9 +35,6 @@ export default function PeopleListScreen() {
                 <MaterialIcons name="account-circle" color="#000" size={22} />
                 <Text style={styles.friendName}>{item}</Text>
             </Pressable>
-            {/* <Pressable onPress={() => editFriend(item)}>
-              <MaterialIcons name="edit" color="#000" size={22} />
-            </Pressable> */}
             <Pressable onPress={() => removeFriend(item)}>
               <MaterialIcons name="delete-forever" color="#000" size={22} />
             </Pressable>
@@ -45,7 +42,7 @@ export default function PeopleListScreen() {
         )}
       />
      </View>
-      <AddPeopleForm isVisible={isAddFormVisible} onClose={() => setIsAddFormVisible(false)} />
+      <AddForm isVisible={isAddFormVisible} onClose={() => setIsAddFormVisible(false)} fieldName="person" add={addFriend}/>
     </View>
   );
 }
@@ -60,7 +57,6 @@ const styles = StyleSheet.create({
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   friendName: {
     fontSize: 18,
-    fontWeight: 700,
     marginLeft: 10
   },
   userBtn : {

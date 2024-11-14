@@ -1,21 +1,21 @@
-import { Modal, View, Text, Pressable, StyleSheet, Button, TextInput, FlatList } from 'react-native';
+import { Modal, View,Pressable, StyleSheet, Button, TextInput } from 'react-native';
 import { PropsWithChildren } from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { usePeopleContext } from '@/app/provider/PeopleProvider';
 import { useState} from 'react'
 
 type Props = PropsWithChildren<{
   isVisible: boolean;
   onClose: () => void;
+  add: () => void;
+  fieldName: string;
 }>;
 
-export default function AddPeopleForm ({ isVisible, children, onClose }: Props) {
-  const { addFriend } = usePeopleContext();
-  const [newFriend, setNewFriend] = useState('');
-  const handleAddFriend = async () => {
-    if (newFriend.trim()) {
-      await addFriend(newFriend.trim());
-      setNewFriend('');
+export default function AddForm ({ isVisible, children, onClose, add, fieldName }: Props) {
+  const [newState, setNewState] = useState('');
+  const onAdd= async () => {
+    if (newState.trim()) {
+      await add(newState.trim());
+      setNewState('');
       onClose()
     }
   };
@@ -27,11 +27,11 @@ export default function AddPeopleForm ({ isVisible, children, onClose }: Props) 
           </Pressable>
           <TextInput
             style={styles.input}
-            placeholder="Enter name"
-            value={newFriend}
-            onChangeText={setNewFriend}
+            placeholder={`Enter ${fieldName}`}
+            value={newState}
+            onChangeText={setNewState}
           />
-          <Button title="Add Friend" onPress={handleAddFriend} />
+          <Button title={`Add ${fieldName}`} onPress={onAdd} />
       </View>
     </Modal>
   )
