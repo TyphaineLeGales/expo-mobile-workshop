@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 import { usePeopleContext } from '@/provider/PeopleProvider'
 import AddBtn from '@/components/AddBtn';
 import AddForm from '@/components/AddForm'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 export default function PeopleListScreen() {
   const { friends, isLoading,removeFriend, addFriend } = usePeopleContext();
@@ -18,6 +18,9 @@ export default function PeopleListScreen() {
       </View>
     );
   }
+  useEffect(() => {
+    console.log("Current friends state:", friends);
+  }, [friends]);
 
   return (
     <View style={styles.container}>
@@ -28,12 +31,15 @@ export default function PeopleListScreen() {
      <View style={styles.main}>
       <FlatList
         data={friends}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => {
+          console.log("in key extractor", item.id)
+          return item.id
+        }}
         renderItem={({ item }) => (
           <View style={styles.friendItem}>
-            <Pressable onPress={() => router.push(`/people/${item}`)} style={styles.userBtn}>
+            <Pressable onPress={() => router.push(`/people/${item.name}`)} style={styles.userBtn}>
                 <MaterialIcons name="account-circle" color="#000" size={22} />
-                <Text style={styles.friendName}>{item}</Text>
+                <Text style={styles.friendName}>{item.name}</Text>
             </Pressable>
             <Pressable onPress={() => removeFriend(item)}>
               <MaterialIcons name="delete-forever" color="#000" size={22} />

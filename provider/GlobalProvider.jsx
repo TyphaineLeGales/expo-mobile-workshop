@@ -1,11 +1,12 @@
 import React, { createContext, useContext } from 'react';
 import { PeopleProvider } from './PeopleProvider';
 import { EventsProvider } from './EventsProvider';
+import { GiftsProvider } from './GiftsProvider';
 
 export const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
-  const providers = [PeopleProvider, EventsProvider];
+  const providers = [GiftsProvider, PeopleProvider, EventsProvider];
   const initialValue = {};
 
   return (

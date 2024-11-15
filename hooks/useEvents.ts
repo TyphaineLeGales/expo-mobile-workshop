@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
 const EVENTS_KEY = 'EVENTS_KEY';
+interface Event {
+  id: string
+  name: string
+  date?: Date
+  recurring?: string
+  people: number[]
+  gift_bought: number[]
+}
 
-// Custom hook to manage friends data
 export function useEvents() {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load friends from AsyncStorage on mount
   useEffect(() => {
     const loadEvents = async () => {
       try {
@@ -25,16 +32,16 @@ export function useEvents() {
   }, []);
 
 
-  const addEvents = async (name) => {
+  const addEvents = async (name: string) => {
+    const newEvent = {name, id: uuid.v4()}
     try {
-      const newEvents = [...events, name];
+      const newEvents = [...events, newEvent];
       await AsyncStorage.setItem(EVENTS_KEY, JSON.stringify(newEvents));
       setEvents(newEvents);
     } catch (error) {
       console.error("Error adding friend", error);
     }
   };
-
 
   const removeEvents = async (name) => {
     try {

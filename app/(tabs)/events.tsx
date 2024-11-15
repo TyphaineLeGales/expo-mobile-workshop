@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet, Button, FlatList,ActivityIndicator, Pressable } from 'react-native';
-import { useRouter } from "expo-router";
 import { useEventsContext } from '@/provider/EventsProvider';
 import AddBtn from '@/components/AddBtn';
 import AddForm from '@/components/AddForm'
@@ -8,7 +7,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 export default function EventsScreen() {
   const { events, isLoading,removeEvents, addEvents } = useEventsContext();
   const [isAddFormVisible, setIsAddFormVisible] = useState<boolean>(false);
-  const router = useRouter()
 
   if (isLoading) {
     return (
@@ -22,18 +20,18 @@ export default function EventsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <Text style={styles.title}>Events List</Text>
+        <Text style={styles.title}>Upcoming events List</Text>
         <AddBtn onPress={() => setIsAddFormVisible(true)}></AddBtn>
       </View>
      <View style={styles.main}>
       <FlatList
         data={events}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.friendItem}>
             <Pressable style={styles.userBtn}>
                 <MaterialIcons name="event" color="#000" size={22} />
-                <Text style={styles.friendName}>{item}</Text>
+                <Text style={styles.friendName}>{item.name}</Text>
             </Pressable>
             <Pressable onPress={() => removeEvents(item)}>
               <MaterialIcons name="delete-forever" color="#000" size={22} />

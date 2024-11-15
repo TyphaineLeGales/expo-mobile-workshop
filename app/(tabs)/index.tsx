@@ -5,7 +5,7 @@ export default function FriendsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home is where the heart is</Text>
+      <Text style={styles.title}> You have 2 upcoming events </Text>
     </View>
   );
 }
