@@ -4,9 +4,11 @@ import AddBtn from '@/components/AddBtn';
 import AddGift from '@/components/AddGift'
 import {useState, useEffect} from 'react'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useRouter } from 'expo-router';
 export default function EventsScreen() {
   const { gifts, isLoading, removeGift } = useGiftsContext();
   const [isAddFormVisible, setIsAddFormVisible] = useState<boolean>(false);
+  const router = useRouter()
 
   if (isLoading) {
     return (
@@ -29,15 +31,23 @@ export default function EventsScreen() {
         keyExtractor={(item) => {
           console.log(item)
           return item.id
+
         }}
         renderItem={({ item }) => (
           <View style={styles.friendItem}>
-            <View>
+            <View style={styles.contentContainer}>
               <Pressable style={styles.userBtn}>
                   <MaterialIcons name="redeem" color="#000" size={22} />
                   <Text style={styles.friendName}>{item.name}</Text>
               </Pressable>
               <Image source={item.image} style={styles.image} />
+              {
+                item.person && (
+                  <Pressable onPress={() => router.push(`/people/${item.person.name}`)} style={styles.person}>
+                    <Text style={styles.friendName}>{item.person.name}</Text>
+                  </Pressable>
+                )
+              }
             </View>
             <Pressable onPress={() => removeGift(item)}>
               <MaterialIcons name="delete-forever" color="#000" size={22} />
@@ -66,6 +76,9 @@ const styles = StyleSheet.create({
   userBtn : {
     flexDirection: 'row',
   }, 
+  contentContainer: {
+    flex: 1
+  }, 
   image: {
     width: 150, 
     height: 150,
@@ -73,5 +86,11 @@ const styles = StyleSheet.create({
     marginTop: 12, 
     borderWidth: 1,
     borderColor:"#dbdbdb"
+  }, 
+  person: {
+    backgroundColor:"#ffec9e",
+    alignSelf: "flex-end", 
+    borderRadius: 25, 
+    padding:6,
   }
 });

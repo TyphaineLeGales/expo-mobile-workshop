@@ -5,7 +5,8 @@ import uuid from 'react-native-uuid';
 interface Gift {
   id?: string
   name: string
-  image: { uri: string } | number;
+  image: { uri: string } | number
+  person: number | null
 }
 
 const GIFTS_KEY = 'GIFTS_KEY';

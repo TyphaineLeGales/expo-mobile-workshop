@@ -1,10 +1,11 @@
-import { Modal, View,Pressable, StyleSheet, Button, TextInput, Image } from 'react-native';
+import { Modal, View,Pressable, StyleSheet, Button, TextInput, Image, TouchableOpacity, FlatList, Text  } from 'react-native';
 import { PropsWithChildren } from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useState} from 'react'
 import * as ImagePicker from 'expo-image-picker';
 import { MediaTypeOptions } from 'expo-image-picker';
 import { useGiftsContext } from '@/provider/GiftsProvider';
+import { usePeopleContext } from '@/provider/PeopleProvider';
 
 type Props = PropsWithChildren<{
   isVisible: boolean;
@@ -13,15 +14,20 @@ type Props = PropsWithChildren<{
 
 export default function AddForm ({ isVisible, onClose}: Props) {
   const { addGift } = useGiftsContext();
+  const { friends } = usePeopleContext();
+  const [filteredFriends, setFilteredFriends] = useState([]);
   const [name, setName] = useState('');
   const [image, setImage] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState('');
+  const [selectedFriend, setSelectedFriend] = useState()
   const onAdd= async () => {
     if (name.trim()) {
       const gift = {
         image: {
           uri: image
         }, 
-        name: name
+        name: name, 
+        person: selectedFriend
       }
       await addGift(gift);
       setName('');
@@ -49,6 +55,26 @@ export default function AddForm ({ isVisible, onClose}: Props) {
     }
   };
 
+  // Handle input changes
+  const handleInputChange = (text) => {
+    setInputValue(text);
+    if (text === '') {
+      setFilteredFriends([]);
+    } else {
+      const suggestions = friends.filter(friend =>
+        friend.name.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredFriends(suggestions);
+    }
+  };
+
+  // Select a friend
+  const handleSelectFriend = (friend) => {
+    setInputValue(friend.name);
+    setSelectedFriend(friend)
+    setFilteredFriends([]); // Hide suggestions
+  };
+
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={styles.modalContent}>
@@ -63,7 +89,26 @@ export default function AddForm ({ isVisible, onClose}: Props) {
           />
           <Button title="Pick an image from camera roll" onPress={pickImage} />
           {image && <Image source={{ uri: image }} style={styles.image} />}
-
+          <TextInput
+            style={styles.input}
+            value={inputValue}
+            onChangeText={handleInputChange}
+            placeholder="Add it to someone's gift list"
+          />
+          <View style={styles.suggestions}>
+            {filteredFriends.length > 0 && (
+              <FlatList
+                data={filteredFriends}
+                keyExtractor={(item, index) => `${item}-${index}`}
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => handleSelectFriend(item)}>
+                    <Text style={styles.suggestion}>{item.name}</Text>
+                  </TouchableOpacity>
+                )}
+                style={styles.suggestionsList}
+              />
+            )}
+          </View>
           <Button title={`Add gift`} onPress={onAdd} />
       </View>
     </Modal>
@@ -72,7 +117,7 @@ export default function AddForm ({ isVisible, onClose}: Props) {
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: '50%',
+    height: '75%',
     width: '100%',
     backgroundColor: '#25292e',
     borderTopRightRadius: 18,
@@ -97,5 +142,10 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+  suggestions: {
+    borderColor: '#ccc', 
+    backgroundColor:'#ccc', 
+    padding: 10, 
+  }
 
 });
