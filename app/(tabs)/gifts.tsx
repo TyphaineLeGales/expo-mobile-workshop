@@ -28,11 +28,7 @@ export default function EventsScreen() {
      <View style={styles.main}>
       <FlatList
         data={gifts}
-        keyExtractor={(item) => {
-          console.log(item)
-          return item.id
-
-        }}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.friendItem}>
             <View style={styles.contentContainer}>
@@ -40,14 +36,16 @@ export default function EventsScreen() {
                   <MaterialIcons name="redeem" color="#000" size={22} />
                   <Text style={styles.friendName}>{item.name}</Text>
               </Pressable>
-              <Image source={item.image} style={styles.image} />
-              {
-                item.person && (
-                  <Pressable onPress={() => router.push(`/people/${item.person.name}`)} style={styles.person}>
-                    <Text style={styles.friendName}>{item.person.name}</Text>
-                  </Pressable>
-                )
-              }
+              <View style={{flexDirection: "row"}}>  
+                <Image source={item.image} style={styles.image} />
+                {
+                  item.person && (
+                    <Pressable onPress={() => router.push(`/people/${item.person.name}`)} style={styles.person}>
+                      <Text style={styles.friendName}>{item.person.name}</Text>
+                    </Pressable>
+                  )
+                }
+              </View>
             </View>
             <Pressable onPress={() => removeGift(item)}>
               <MaterialIcons name="delete-forever" color="#000" size={22} />
